@@ -42,18 +42,30 @@ var multiplesOfFive = function(numbers) {
 
 // use _.filter to return the fruits array with only the desired fruit.
 var onlyOneFruit = function(fruits, targetFruit) {
-
+  return _.filter(fruits, function(item) {
+    if (item === targetFruit) {
+      return item;
+    }
+  });
 };
 
 // use _.filter to return the fruits array with only fruits
 // starting with the letter 'P'.
 var startsWith = function(fruits, letter) {
-
+  return _.filter(fruits, function(item) {
+    if (item.slice(0, 1) === letter) {
+      return item;
+    }
+  });
 };
 
 // return a filtered array containing only cookie-type desserts.
 var cookiesOnly = function(desserts) {
-
+  return _.filter(desserts, function(item) {
+    if (item === 'cookie') {
+      return item;
+    }
+  });
 };
 
 /*
