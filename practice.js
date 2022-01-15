@@ -104,10 +104,9 @@ var dessertCategories = function(desserts) {
 var ninetiesKid = function(movies) {
   return _.reduce(movies, function(accumulator, item) {
     if (item.releaseYear > 1990 && item.releaseYear < 2000) {
-      console.log(accumulator);
       accumulator.push(item.title);
-      return accumulator;
     }
+    return accumulator;
   }, []);
 };
 
