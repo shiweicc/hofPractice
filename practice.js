@@ -76,27 +76,51 @@ var cookiesOnly = function(desserts) {
 
 // return the total price of all products.
 var sumTotal = function(products) {
-
+  return _.reduce(products, function(accumulator, item) {
+    item = Number.parseFloat(item.price.slice(1));
+    return accumulator + item;
+  }, 0);
 };
 
 // return an object consisting of dessert types and how many of each.
 // exampleOutput: { dessertType: 3, dessertType2: 1 }
 var dessertCategories = function(desserts) {
+  return _.reduce(desserts, function(accumulator, item) {
+    dessertType = item.type;
 
+    if (accumulator[dessertType] !== undefined) {
+      accumulator[dessertType] = accumulator[dessertType] + 1;
+    } else {
+      accumulator[dessertType] = 1;
+    }
+
+    return accumulator;
+  }, {});
 };
 
 // given an array of movie data objects,return an array containing
 // movies that came out between 1990 and 2000.
 // TIP: use an array as your accumulator - don't push to an external array!
 var ninetiesKid = function(movies) {
-
+  return _.reduce(movies, function(accumulator, item) {
+    if (item.releaseYear > 1990 && item.releaseYear < 2000) {
+      console.log(accumulator);
+      accumulator.push(item.title);
+      return accumulator;
+    }
+  }, []);
 };
 
 // return an boolean stating if there exists a movie with a shorter
 // runtime than your time limit.
 // timeLimit is an integer representing a number of minutes.
 var movieNight = function(movies, timeLimit) {
-
+  return _.reduce(movies, function(accumulator, item) {
+    if (item.runtime < timeLimit) {
+      accumulator = true;
+    }
+    return accumulator;
+  }, false);
 };
 
 /*
@@ -108,14 +132,27 @@ var movieNight = function(movies, timeLimit) {
 // given an array of strings, use _.map to return a new array containing all
 // strings converted to uppercase letters.
 var upperCaseFruits = function(fruits) {
-
+  return _.map(fruits, function (item) {
+    return item.toUpperCase();
+  });
 };
 
 // given an array of dessert objects, return a new array of objects
 // that have a new "glutenFree" property, with a boolean value.
 // TIP: Items that contain flour are not gluten-free.
 var glutenFree = function(desserts) {
-
+  return _.map(desserts, function (item) {
+    var hasFlour = false;
+    if (item.ingredients.includes('flour')) {
+      hasFlour = true;
+    }
+    if (hasFlour === false) {
+      item.glutenFree = false;
+    } else {
+      item.glutenFree = true;
+    }
+    return item;
+  });
 };
 
 // use _.map to return an array of items with their sale prices, with a new property
@@ -139,5 +176,10 @@ var glutenFree = function(desserts) {
 
 */
 var applyCoupon = function(groceries, coupon) {
-
+  return _.map(groceries, function(item) {
+    var itemPrice = Number.parseFloat(item.price.slice(1));
+    var salePrice = (itemPrice * (1 - coupon)).toFixed(2);
+    item.salePrice = '$' + salePrice;
+    return item;
+  });
 };
